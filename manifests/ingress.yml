@@ -9,12 +9,12 @@ metadata:
 
 spec:
     rules:
-        http:
-            paths:
-            - path: /
-              backend:
-                  service:
-                      name: "cluster01-ff64"
-                      port:
-                          number: 80
-              pathType: Exact
+    - http:
+          paths:
+          - path: /
+            backend:
+                service:
+                    name: "cluster01-ff64"
+                    port:
+                        number: 80
+            pathType: Exact
