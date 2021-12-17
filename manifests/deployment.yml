@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "cluster01-ff64"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "cluster01-ff64"
+  template:
+    metadata:
+      labels:
+        app: "cluster01-ff64"
+    spec:
+      containers:
+        - name: "cluster01-ff64"
+          image: "clustercr01.azurecr.io/cluster01"
+          ports:
+          - containerPort: 80
