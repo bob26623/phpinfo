@@ -5,7 +5,6 @@ metadata:
     labels:
         app: "cluster01-ff64"
 spec:
-    type: LoadBalancer
     ports:
     - port: 80
       targetPort: 80
