@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: "phpinfo"
-          image: "clustercr01.azurecr.io/cluster01"
+          image: "clustercr01.azurecr.io/phpinfo"
           ports:
           - containerPort: 80
