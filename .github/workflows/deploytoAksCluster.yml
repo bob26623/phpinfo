@@ -3,27 +3,20 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    
-    
 
-
-
-    
 
     - uses: azure/k8s-set-context@v1
       id: login
       with:
          kubeconfig: ${{ secrets.aks_cluster01_kubeConfig }}
-    
+
 
     - uses: azure/k8s-deploy@v1.2
       with:
         namespace: app03
         manifests: |
           manifests/deployment.yml
-          manifests/service.yml
         images: |
           clustercr01.azurecr.io/phpinfo:bff036785d600106d26eead1b003b992237f56e8
 
-       
-    
+
