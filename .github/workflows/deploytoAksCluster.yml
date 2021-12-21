@@ -24,6 +24,13 @@ jobs:
         username: ${{ steps.create-acr.outputs.acr_username }}
         password: ${{ steps.create-acr.outputs.acr_password }}
 
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t clustercr01.azurecr.io/phpinfo:${{ github.sha }} --label dockerfile-path=Dockerfile
+        docker push clustercr01.azurecr.io/phpinfo:${{ github.sha }}
+    
+
     - uses: azure/k8s-set-context@v1
       id: login
       with:
@@ -37,12 +44,13 @@ jobs:
             echo `kubectl create namespace app03`
         fi
 
-    - uses: azure/k8s-create-secret@v1
+    - uses: azure/k8s-deploy@v1.2
       with:
         namespace: app03
-        container-registry-url: clustercr01.azurecr.io
-        container-registry-username: ${{ steps.create-acr.outputs.acr_username }}
-        container-registry-password: ${{ steps.create-acr.outputs.acr_password }}
-        secret-name: cluster01dockerauth
+        manifests: |
+          manifests/deployment.yml
+        images: |
+          clustercr01.azurecr.io/phpinfo:${{ github.sha }}
+
        
     
