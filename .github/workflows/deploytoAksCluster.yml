@@ -13,7 +13,7 @@ jobs:
     - name: Create ACR
       id: create-acr
       run: |
-        az acr create -n clustercr01 -g clustercr0183a0-rg --location "East Asia" --sku Basic --admin-enabled
+        az acr create -n clustercr01 -g aks01 --location "East Asia" --sku Basic --admin-enabled
         echo "::set-output name=acr_username::`az acr credential show -n clustercr01 --query username | xargs`"
         echo "::set-output name=acr_password::`az acr credential show -n clustercr01 --query passwords[0].value | xargs`"
         echo "::add-mask::`az acr credential show -n clustercr01 --query passwords[0].value | xargs`"
@@ -30,35 +30,3 @@ jobs:
         docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t clustercr01.azurecr.io/cluster01:${{ github.sha }} --label dockerfile-path=Dockerfile
         docker push clustercr01.azurecr.io/cluster01:${{ github.sha }}
     
-    - uses: azure/k8s-set-context@v1
-      id: login
-      with:
-         kubeconfig: ${{ secrets.aks_cluster01_kubeConfig }}
-    
-    - name: Create namespace
-      run: |
-        namespacePresent=`kubectl get namespace | grep app03 | wc -l`
-        if [ $namespacePresent -eq 0 ]
-        then
-            echo `kubectl create namespace app03`
-        fi
-
-    - uses: azure/k8s-create-secret@v1
-      with:
-        namespace: app03
-        container-registry-url: clustercr01.azurecr.io
-        container-registry-username: ${{ steps.create-acr.outputs.acr_username }}
-        container-registry-password: ${{ steps.create-acr.outputs.acr_password }}
-        secret-name: cluster01dockerauth
-       
-    - uses: azure/k8s-deploy@v1.2
-      with:
-        namespace: app03
-        manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
-          manifests/ingress.yml
-        images: |
-          clustercr01.azurecr.io/cluster01:${{ github.sha }}
-        imagepullsecrets: |
-          cluster01dockerauth   
