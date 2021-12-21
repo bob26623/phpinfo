@@ -15,13 +15,6 @@ jobs:
       with:
          kubeconfig: ${{ secrets.aks_cluster01_kubeConfig }}
     
-    - name: Create namespace
-      run: |
-        namespacePresent=`kubectl get namespace | grep app03 | wc -l`
-        if [ $namespacePresent -eq 0 ]
-        then
-            echo `kubectl create namespace app03`
-        fi
 
     - uses: azure/k8s-deploy@v1.2
       with:
