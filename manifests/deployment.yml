@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: "phpinfo"
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: "phpinfo"
@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: "phpinfo"
-          image: "clustercr01.azurecr.io/phpinfo"
+          image: "gableesaving.azurecr.io/sample/phpinfo"
           ports:
           - containerPort: 80
