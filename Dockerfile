@@ -12,4 +12,4 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 COPY --chown=www-data:www-data wwwdata /var/www/html
 WORKDIR /var/www/html/nodejs
-CMD apache2 && node json.js
+CMD apachectl start && node json.js
