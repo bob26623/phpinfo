@@ -49,5 +49,5 @@ jobs:
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          gableesaving.azurecr.io/sample/phpinfo:${{ github.sha }}
+          gableesaving.azurecr.io/phpinfo:${{ github.sha }}
 

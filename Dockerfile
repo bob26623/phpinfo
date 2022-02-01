@@ -8,6 +8,8 @@ RUN docker-php-source extract && \
 docker-php-ext-install pdo pdo_pgsql pgsql pdo_mysql mysqli && \
 docker-php-source delete
 
-COPY --chown=www-data:www-data wwwdata /var/www/html
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
-CMD apache2-foreground
+COPY --chown=www-data:www-data wwwdata /var/www/html
+WORKDIR /var/www/html/nodejs
+CMD apache2-background && node json.js
