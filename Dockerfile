@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7.3-apache
 
 RUN apt-get update && \
 apt-get install -y zlib1g-dev libpq-dev && \
