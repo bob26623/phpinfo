@@ -1,7 +1,7 @@
 FROM php:7.3-apache
 
 RUN apt-get update && \
-apt-get install -y zlib1g-dev libpq-dev && \
+apt-get install -y zlib1g-dev libpq-dev gcc g++ make && \
 rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-source extract && \

@@ -9,7 +9,11 @@ spec:
     - port: 80
       targetPort: 80
       protocol: TCP
-      name: http
+      name: apache
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+      name: node
     selector:
         app: "phpinfo"
     type: ClusterIP

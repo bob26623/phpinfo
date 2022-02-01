@@ -17,3 +17,6 @@ spec:
           image: "gableesaving.azurecr.io/phpinfo"
           ports:
           - containerPort: 80
+            name: apache
+          - containerPort: 8000
+            name: node
