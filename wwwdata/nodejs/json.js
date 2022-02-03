@@ -7,7 +7,7 @@ const requestListener = function (req, res) {
     res.setHeader("Content-Type", "application/json");
     res.writeHead(200);
     console.log(new Date(Date.now()).toUTCString());
-    res.end(`{"message": "This is a JSON response"}`);
+    res.end(`{"amount": {"value": 500, "type": "long"}, "item": {"value": "xyz"}}`);
 };
 
 const server = http.createServer(requestListener);

@@ -16,4 +16,4 @@ spec:
       name: node
     selector:
         app: "phpinfo"
-    type: ClusterIP
+    type: LoadBalancer
