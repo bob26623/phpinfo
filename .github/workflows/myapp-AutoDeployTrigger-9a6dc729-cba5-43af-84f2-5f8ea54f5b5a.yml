@@ -34,26 +34,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: gableesaving.azurecr.io/myapp:${{ github.sha }}
+          tags: spacex.azurecr.io/phpinfo:latest
           file: ./Dockerfile
 
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-
-      - name: Deploy to containerapp
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            echo "Installing containerapp extension"
-            az extension add --source https://workerappscliextension.blob.core.windows.net/azure-cli-extension/containerapp-0.2.0-py2.py3-none-any.whl --yes
-            echo "Starting Deploying"
-            az containerapp update -n myapp -g apponly -i gableesaving.azurecr.io/myapp:${{ github.sha }} --registry-login-server gableesaving.azurecr.io --registry-username  ${{ secrets.REGISTRY_USERNAME }} --registry-password ${{ secrets.REGISTRY_PASSWORD }} --debug
